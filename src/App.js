@@ -1,23 +1,59 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
+import "./App.css";
+import axios from "axios";
+import Appbar from "./components/Appbar";
+import Form from "./components/Form";
+import { Container } from "@material-ui/core";
+import StudentInfo from "./components/StudentInfo";
+import Result from "./components/Result";
+import Footer from "./components/Footer";
 
 function App() {
+  const [id, setId] = useState("");
+  const [semester, setSemester] = useState("");
+  const [semesterList, setSemesterList] = useState([]);
+  const [info, setInfo] = useState([]);
+  const [result, setResult] = useState([]);
+
+  const getSemester = async () => {
+    const res = await axios.get(
+      "http://software.diu.edu.bd:8189/result/semesterList"
+    );
+    setSemesterList(res.data);
+  };
+
+  const getResult = async () => {
+    const res = await axios.get(
+      `http://software.diu.edu.bd:8189/result?semesterId=${semester}&studentId=${id}`
+    );
+    setResult(res.data);
+  };
+
+  useEffect(() => {
+    const getUser = async () => {
+      const res = await axios.get(
+        `http://software.diu.edu.bd:8189/result/studentInfo?studentId=${id}`
+      );
+      setInfo(res.data);
+    };
+    getSemester();
+    getUser();
+  }, [id]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Appbar />
+      <Container>
+        <Form
+          setId={setId}
+          setSemester={setSemester}
+          semesterList={semesterList}
+          getResult={getResult}
+        />
+        <StudentInfo info={info} />
+        <Result result={result} />
+      </Container>
+      <Footer />
     </div>
   );
 }
