@@ -15,29 +15,33 @@ function App() {
   const [info, setInfo] = useState([]);
   const [result, setResult] = useState([]);
 
-  const getSemester = async () => {
+  const getUser = async () => {
     const res = await axios.get(
-      "http://software.diu.edu.bd:8189/result/semesterList"
+      `https://diu-result.herokuapp.com/api/info/${id}`
     );
-    setSemesterList(res.data);
+    setInfo(res.data);
   };
 
   const getResult = async () => {
-    const res = await axios.get(
-      `http://software.diu.edu.bd:8189/result?semesterId=${semester}&studentId=${id}`
+    const res = await axios.post(
+      "https://diu-result.herokuapp.com/api/result",
+      {
+        semester: semester,
+        id: id,
+      }
     );
+    getUser();
     setResult(res.data);
   };
 
   useEffect(() => {
-    const getUser = async () => {
+    const getSemester = async () => {
       const res = await axios.get(
-        `http://software.diu.edu.bd:8189/result/studentInfo?studentId=${id}`
+        "https://diu-result.herokuapp.com/api/semester"
       );
-      setInfo(res.data);
+      setSemesterList(res.data);
     };
     getSemester();
-    getUser();
   }, [id]);
 
   return (
