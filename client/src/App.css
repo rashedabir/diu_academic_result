@@ -2,7 +2,7 @@ body {
   background: #eee;
 }
 footer {
-  background-color: #45b;
+  background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
   text-align: center;
   color: white;
   margin-top: 20px;

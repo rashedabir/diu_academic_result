@@ -14,6 +14,9 @@ const useStyles = makeStyles((theme) => ({
   heading: {
     margin: "auto",
   },
+  main: {
+    background: "linear-gradient(to right, #0f2027, #203a43, #2c5364)",
+  },
 }));
 
 function Appbar() {
@@ -21,7 +24,7 @@ function Appbar() {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="static" className={classes.main}>
         <Toolbar variant="dense">
           <Typography variant="h6" className={classes.heading} color="inherit">
             DIU Academic Result

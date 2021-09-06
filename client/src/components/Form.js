@@ -27,6 +27,8 @@ const useStyles = makeStyles((theme) => ({
   button: {
     margin: "0 10px",
     width: "10%",
+    background: "linear-gradient(to right, #0f2027, #203a43, #2c5364)",
+    color: "white",
     [theme.breakpoints.down("md")]: {
       width: "100%",
       margin: "10px auto",
@@ -73,7 +75,6 @@ function Form({ setId, setSemester, semesterList, getResult }) {
         }}
         className={classes.button}
         variant="contained"
-        color="secondary"
       >
         Send <SendIcon className={classes.icon} />
       </Button>
